@@ -8,6 +8,7 @@ from rest_framework import permissions
 class PropertyViewSet(viewsets.ModelViewSet):
     queryset = Property.objects.all().order_by('?')
     serializer_class = PropertySerializer
+    reviews = 'PropertyReviewViewSet'
 
 
 class PropertyReviewViewSet(viewsets.ModelViewSet):

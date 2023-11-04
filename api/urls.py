@@ -5,7 +5,7 @@ from .views import *
 router = SimpleRouter()
 router.register('properties', PropertyViewSet, basename='properties'),
 
-router.register('property-reviews', PropertyReviewViewSet, basename='property_reviews'),
+router.register('reviews', PropertyReviewViewSet, basename='property_reviews'),
 
 router.register('users', UserViewSet, basename='users'),
 

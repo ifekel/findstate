@@ -33,9 +33,6 @@ class Property(models.Model):
     roofing = models.CharField(max_length=200, choices=[('New', 'New'), ('Old', 'Old')])
     timestamp = models.DateTimeField(default=aware_datetime)
 
-    def get_absolute_url(self):
-        return reverse('app:property', args=[str(self.id)])
-
     def __str__(self):
         return self.name
 
@@ -46,14 +43,12 @@ class PropertyReview(models.Model):
         default=uuid.uuid4,
         editable=False
     )
-    property = models.ForeignKey(Property, on_delete=models.CASCADE)
     name = models.CharField(max_length=255)
+    image = models.FileField(upload_to='property_review_image/', null=True)
+    property = models.ForeignKey(Property, on_delete=models.CASCADE, related_name='reviews')
     review = models.TextField()
     ratings = models.PositiveIntegerField()
     timestamp = models.DateTimeField(default=aware_datetime)
-
-    def get_absolute_url(self):
-        return reverse('admin:review', kwargs={'id': self.id})
 
     def __str__(self):
         return self.name

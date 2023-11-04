@@ -80,11 +80,6 @@
 {% block javascript %}
 <script>
     const addAgentForm = document.getElementById("addAgentForm");
-    const formData = new FormData(addAgentForm);
-    const selectedProperties = [...document.querySelectorAll('input[name="properties"]:checked')]
-        .map(checkbox => checkbox.value);
-
-    formData.append('selectedProperties', selectedProperties);
 
     addAgentForm.addEventListener('submit', (e) => {
         e.preventDefault();
@@ -92,14 +87,24 @@
         const name = document.getElementById("name").value;
         const image = document.getElementById("image").files[0];
 
+        const formData = new FormData(addAgentForm);
+        const selectedProperties = [...document.querySelectorAll('input[name="properties"]:checked')]
+            .map(checkbox => checkbox.value);
+
+        formData['name'] = name;
+        formData['image'] = image;
+        formData['selectedProperties'] = selectedProperties;
+
         // Fetch API request to send the form data
-        fetch('your_api_endpoint_here', {
+        fetch('/api/v1/agents/', {
             method: 'POST',
             body: formData,
         })
         .then(response => response.json())
         .then(data => {
-            console.log(data);
+            setTimeout(() => {
+                location.href = "{% url 'admin:agents' %}"
+            }, 2000)
         })
         .catch(error => {
             console.error('Error:', error);

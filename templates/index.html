@@ -434,55 +434,8 @@
 				<h2 class="mb-4">Our Agents</h2>
 			</div>
 		</div>
-		<div class="row">
-			<div class="col-md-3 ftco-animate">
-				<div class="agent">
-					<div class="img">
-						<img src="../static/images/team-1.jpg" class="img-fluid" alt="Colorlib Template">
-					</div>
-					<div class="desc">
-						<h3><a href="properties.html">Ben Ford</a></h3>
-						<p class="h-info"><span class="ion-ios-filing icon"></span> <span class="details">43
-								Properties</span></p>
-					</div>
-				</div>
-			</div>
-			<div class="col-md-3 ftco-animate">
-				<div class="agent">
-					<div class="img">
-						<img src="../static/images/team-2.jpg" class="img-fluid" alt="Colorlib Template">
-					</div>
-					<div class="desc">
-						<h3><a href="properties.html">John Cooper</a></h3>
-						<p class="h-info"><span class="ion-ios-filing icon"></span> <span class="details">28
-								Properties</span></p>
-					</div>
-				</div>
-			</div>
-			<div class="col-md-3 ftco-animate">
-				<div class="agent">
-					<div class="img">
-						<img src="../static/images/team-3.jpg" class="img-fluid" alt="Colorlib Template">
-					</div>
-					<div class="desc">
-						<h3><a href="properties.html">Janice Clinton</a></h3>
-						<p class="h-info"><span class="ion-ios-filing icon"></span> <span class="details">30
-								Properties</span></p>
-					</div>
-				</div>
-			</div>
-			<div class="col-md-3 ftco-animate">
-				<div class="agent">
-					<div class="img">
-						<img src="../static/images/team-4.jpg" class="img-fluid" alt="Colorlib Template">
-					</div>
-					<div class="desc">
-						<h3><a href="properties.html">Eunice Henceford</a></h3>
-						<p class="h-info"><span class="ion-ios-filing icon"></span> <span class="details">25
-								Properties</span></p>
-					</div>
-				</div>
-			</div>
+		<div class="row" id="agentContainer">
+
 		</div>
 	</div>
 </section>
@@ -492,6 +445,7 @@
 <script>
 
 	let exclusiveOffers = document.getElementById("exclusiveOffers");
+	let agentContainer = document.getElementById("agentContainer");
 
 	let getExclusiveOffer = async () => {
 		let response = await fetch('http://localhost:8000/api/v1/properties');
@@ -540,8 +494,36 @@
 				exclusiveOffers.innerHTML += row
 			}
 		}
+	};
+
+	let get4Agents = async () => {
+		let response = await fetch('http://localhost:8000/api/v1/agents/');
+		let agents = await response.json()
+
+		for (let i = 0; i < agents.length; i++) {
+			if (i < 4) {
+				let agent = agents[i];
+
+				let row = `
+			<div class="col-md-3">
+				<div class="agent">
+					<div class="img">
+						<img src="${agent.image}" class="img-fluid" alt="Colorlib Template">
+					</div>
+					<div class="desc">
+						<h3><a href="properties.html">${agent.name}</a></h3>
+						<p class="h-info"><span class="ion-ios-filing icon"></span> <span class="details">${agent.properties.length}
+								Properties</span></p>
+					</div>
+				</div>
+			</div>`
+
+				agentContainer.innerHTML += row
+			}
+		}
 	}
 
 	getExclusiveOffer();
+	get4Agents();
 </script>
 {% endblock javascript %}

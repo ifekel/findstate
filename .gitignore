@@ -5,6 +5,7 @@ __pycache__/
 *.pyd
 .DS_Store
 *.swp
+.idea
 
 # Ignore database files
 db.sqlite3
@@ -20,6 +21,7 @@ db.sqlite3
 
 # Ignore static and media files
 /media/
+/staticfiles/
 
 # Ignore Python virtual environment
 venv/

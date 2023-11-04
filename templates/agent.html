@@ -22,97 +22,10 @@
 
 <section class="ftco-section ftco-agent">
   <div class="container">
-    <div class="row">
-      <div class="col-md-3 ftco-animate">
-        <div class="agent">
-          <div class="img">
-            <img src="{% static 'images/team-1.jpg' %}" class="img-fluid" alt="Colorlib Template">
-          </div>
-          <div class="desc">
-            <h3><a href="{% url 'app:properties' %}">Ben Ford</a></h3>
-            <p class="h-info"><span class="ion-ios-filing icon"></span> <span class="details">43 Properties</span></p>
-          </div>
-        </div>
-      </div>
-      <div class="col-md-3 ftco-animate">
-        <div class="agent">
-          <div class="img">
-            <img src="{% static 'images/team-2.jpg' %}" class="img-fluid" alt="Colorlib Template">
-          </div>
-          <div class="desc">
-            <h3><a href="{% url 'app:properties' %}">John Cooper</a></h3>
-            <p class="h-info"><span class="ion-ios-filing icon"></span> <span class="details">28 Properties</span></p>
-          </div>
-        </div>
-      </div>
-      <div class="col-md-3 ftco-animate">
-        <div class="agent">
-          <div class="img">
-            <img src="{% static 'images/team-3.jpg' %}" class="img-fluid" alt="Colorlib Template">
-          </div>
-          <div class="desc">
-            <h3><a href="{% url 'app:properties' %}">Janice Clinton</a></h3>
-            <p class="h-info"><span class="ion-ios-filing icon"></span> <span class="details">30 Properties</span></p>
-          </div>
-        </div>
-      </div>
-      <div class="col-md-3 ftco-animate">
-        <div class="agent">
-          <div class="img">
-            <img src="{% static 'images/team-4.jpg' %}" class="img-fluid" alt="Colorlib Template">
-          </div>
-          <div class="desc">
-            <h3><a href="{% url 'app:properties' %}">Eunice Henceford</a></h3>
-            <p class="h-info"><span class="ion-ios-filing icon"></span> <span class="details">25 Properties</span></p>
-          </div>
-        </div>
-      </div>
-
-      <div class="col-md-3 ftco-animate">
-        <div class="agent">
-          <div class="img">
-            <img src="{% static 'images/team-5.jpg' %}" class="img-fluid" alt="Colorlib Template">
-          </div>
-          <div class="desc">
-            <h3><a href="{% url 'app:properties' %}">Ben Ford</a></h3>
-            <p class="h-info"><span class="ion-ios-filing icon"></span> <span class="details">43 Properties</span></p>
-          </div>
-        </div>
-      </div>
-      <div class="col-md-3 ftco-animate">
-        <div class="agent">
-          <div class="img">
-            <img src="{% static 'images/team-6.jpg' %}" class="img-fluid" alt="Colorlib Template">
-          </div>
-          <div class="desc">
-            <h3><a href="{% url 'app:properties' %}">John Cooper</a></h3>
-            <p class="h-info"><span class="ion-ios-filing icon"></span> <span class="details">28 Properties</span></p>
-          </div>
-        </div>
-      </div>
-      <div class="col-md-3 ftco-animate">
-        <div class="agent">
-          <div class="img">
-            <img src="{% static 'images/team-7.jpg' %}" class="img-fluid" alt="Colorlib Template">
-          </div>
-          <div class="desc">
-            <h3><a href="{% url 'app:properties' %}">Janice Clinton</a></h3>
-            <p class="h-info"><span class="ion-ios-filing icon"></span> <span class="details">30 Properties</span></p>
-          </div>
-        </div>
-      </div>
-      <div class="col-md-3 ftco-animate">
-        <div class="agent">
-          <div class="img">
-            <img src="{% static 'images/team-8.jpg' %}" class="img-fluid" alt="Colorlib Template">
-          </div>
-          <div class="desc">
-            <h3><a href="{% url 'app:properties' %}">Eunice Henceford</a></h3>
-            <p class="h-info"><span class="ion-ios-filing icon"></span> <span class="details">25 Properties</span></p>
-          </div>
-        </div>
-      </div>
+    <div class="row" id="agentsContainer">
+      
     </div>
+     
     <div class="row mt-5">
       <div class="col text-center">
         <div class="block-27">
@@ -131,3 +44,34 @@
   </div>
 </section>
 {% endblock content %}
+
+{% block javascript %}
+<script>
+  const agentsContainer = document.getElementById("agentsContainer");
+
+  const getAgents = async () => {
+    const response = await fetch('http://localhost:8000/api/v1/agents/');
+    const agents = await response.json();
+
+    for (let i = 0; i < agents.length; i++) {
+      let agent = agents[i];
+
+      let row = `<div class="col-md-3">
+        <div class="agent">
+          <div class="img">
+            <img src="${agent.image}" class="img-fluid" alt="Colorlib Template">
+          </div>
+          <div class="desc">
+            <h3><a href="{% url 'app:properties' %}">${agent.name}</a></h3>
+            <p class="h-info"><span class="ion-ios-filing icon"></span> <span class="details">${agent.properties.length} Properties</span></p>
+          </div>
+        </div>
+      </div>`
+
+      agentsContainer.innerHTML += row;
+    }
+  }
+
+  getAgents();
+</script>
+{% endblock javascript %}
