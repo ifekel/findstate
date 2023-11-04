@@ -1,0 +1,44 @@
+<!doctype html>
+{% load static %}
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Modernize Free | {% block title %}{% endblock title %}</title>
+
+    <link rel="shortcut icon" type="image/png" href="{% static 'findstate/images/logos/favicon.png' %}" />
+    <link rel="stylesheet" href="{% static 'findstate/css/styles.min.css' %}" />
+    {% block css %}
+    {% endblock css %}
+</head>
+<body>
+    <!--  Body Wrapper -->
+    <div class="page-wrapper" id="main-wrapper" data-layout="vertical" data-navbarbg="skin6" data-sidebartype="full"
+        data-sidebar-position="fixed" data-header-position="fixed">
+
+        {% include 'findstateAdmin/_sidebar.html' %}
+        <!--  Main wrapper -->
+        <div class="body-wrapper">
+            {% include 'findstateAdmin/_navbar.html' %}
+            {% block content %}
+                
+            {% endblock content %}
+        </div>
+    </div>
+
+    <script src="{% static 'findstate/libs/jquery/dist/jquery.min.js' %}"></script>
+    <script src="{% static 'findstate/libs/bootstrap/dist/js/bootstrap.bundle.min.js' %}"></script>
+    <script src="{% static 'findstate/js/sidebarmenu.js' %}"></script>
+    <script src="{% static 'findstate/js/app.min.js' %}"></script>
+    <script src="{% static 'findstate/libs/apexcharts/dist/apexcharts.min.js' %}"></script>
+    <script src="{% static 'findstate/libs/simplebar/dist/simplebar.js' %}"></script>
+    <script src="{% static 'findstate/js/dashboard.js' %}"></script>
+
+    
+    {% block javascript %}
+        
+    {% endblock javascript %}
+</body>
+
+</html>

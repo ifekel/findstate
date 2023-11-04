@@ -1,0 +1,32 @@
+{% extends 'findstateAdmin/_base.html' %}
+{% load static %}
+{% block blockname %}Users{% endblock blockname %}
+
+{% block customcss %}
+{% endblock customcss %}
+
+
+{% block content %}
+<div class="container-fluid">
+    <div id="userList"></div>
+</div>
+{% endblock content %}
+
+
+{% block javascript %}
+<script>
+    let userList = document.getElementById("userList");
+    let getUsers = async (e) => {
+        let response = await fetch('http://localhost:8000/api/v1/users/');
+        let users = await response.json();
+
+        for (let i = 0; i < users.length; i++) {
+            let user = users[i];
+
+            userList.innerHTML += user['username'];
+        }
+    }
+
+    getUsers();
+</script>
+{% endblock javascript %}
