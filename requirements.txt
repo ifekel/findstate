@@ -22,7 +22,7 @@ python-dotenv==0.21.1
 pytz==2023.3.post1
 PyYAML==6.0.1
 requests==2.31.0
-setuptools==68.2.2
+setuptools==68.0.0
 simplejson==3.19.1
 tzdata==2023.3
 urllib3==2.0.4
